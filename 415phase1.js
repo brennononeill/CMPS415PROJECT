@@ -4,7 +4,7 @@ const fs = require('fs');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-const FILE_PATH = __dirname + '/mydata.json';
+const FILE_PATH = __dirname + '/data.json';
 
 // Read the initial data from file
 let tickets = JSON.parse(fs.readFileSync(FILE_PATH));
