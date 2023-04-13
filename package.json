@@ -1,23 +1,20 @@
 {
-  "name": "Phase1",
+  "name": "CMPS415PROJECT",
   "version": "1.0.0",
-  "description": "CMPS415",
-  "main": "index.js",
+  "description": "Phase 1 CRUD",
+  "main": "phase1.js",
+  "repository": "https://github.com/brennononeill/CMPS415PROJECT",
+  "author": "BrennonONeill",
+  "license": "MIT",
+  "private": false,
   "scripts": {
-    "start": "node index.js"
+    "start": "node phase1.js"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/brennononeill/Phase1.git"
-  },
-  "author": "Brennon O'Neill",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/brennononeill/Phase1/issues"
-  },
-  "homepage": "https://github.com/brennononeill/Phase1#readme",
   "dependencies": {
-    "body-parser": "^1.20.2",
-    "express": "^4.18.2"
+    "express": "^4.18.2",
+    "mongodb": "^5.1.0"
+  },
+  "engines": {
+    "node": ">=14"
   }
 }
