@@ -8,7 +8,7 @@
   "license": "MIT",
   "private": false,
   "scripts": {
-    "start": "node phase1.js"
+    "start": "node 415phase1.js"
   },
   "dependencies": {
     "express": "^4.18.2",
