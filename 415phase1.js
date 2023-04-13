@@ -1,83 +1,127 @@
 const express = require('express');
-const fs = require('fs');
+const fs = require('fs').promises;
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
 const FILE_PATH = __dirname + '/data.json';
 
-// Read the initial data from file
-let tickets = JSON.parse(fs.readFileSync(FILE_PATH));
+async function readTickets() {
+  try {
+    const data = await fs.readFile(FILE_PATH);
+    return JSON.parse(data);
+  } catch (err) {
+    console.error(err);
+    return [];
+  }
+}
+
+async function writeTickets(tickets) {
+  try {
+    await fs.writeFile(FILE_PATH, JSON.stringify(tickets));
+  } catch (err) {
+    console.error(err);
+  }
+}
+
+// Middleware to parse request bodies
+app.use(express.json());
 
 // Endpoint to get all tickets
-app.get('/rest/list', (req, res) => {
-  res.send(tickets);
+app.get('/rest/list', async (req, res) => {
+  try {
+    const tickets = await readTickets();
+    res.send(tickets);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Something went wrong!');
+  }
 });
 
 // Endpoint to get a single ticket by id
-app.get('/rest/ticket/:id', (req, res) => {
-  const id = parseInt(req.params.id);
-  const ticket = tickets.find((t) => t.id === id);
+app.get('/rest/ticket/:id', async (req, res) => {
+  try {
+    const id = parseInt(req.params.id);
+    const tickets = await readTickets();
+    const ticket = tickets.find((t) => t.id === id);
 
-  if (!ticket) {
-    res.status(404).send('Ticket not found');
-  } else {
-    res.send(ticket);
+    if (!ticket) {
+      res.status(404).send('Ticket not found');
+    } else {
+      res.send(ticket);
+    }
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Something went wrong!');
   }
 });
 
 // Endpoint to create a new ticket
-app.post('/rest/ticket', express.json(), (req, res) => {
-  const ticket = req.body;
-  ticket.id = Date.now(); // Assign a unique id
-  tickets.push(ticket);
-  console.log(`Created ticket with id ${ticket.id}`);
+app.post('/rest/ticket', async (req, res) => {
+  try {
+    const tickets = await readTickets();
+    const ticket = req.body;
+    ticket.id = Date.now(); // Assign a unique id
+    tickets.push(ticket);
+    console.log(`Created ticket with id ${ticket.id}`);
 
-  // Write the updated data back to the file
-  fs.writeFileSync(FILE_PATH, JSON.stringify(tickets));
+    await writeTickets(tickets);
 
-  res.send(ticket);
+    res.send(ticket);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Something went wrong!');
+  }
 });
 
 // Endpoint to update an existing ticket by id
-app.put('/rest/ticket/:id', express.json(), (req, res) => {
-  const id = parseInt(req.params.id);
-  const index = tickets.findIndex((t) => t.id === id);
+app.put('/rest/ticket/:id', async (req, res) => {
+  try {
+    const id = parseInt(req.params.id);
+    const tickets = await readTickets();
+    const index = tickets.findIndex((t) => t.id === id);
 
-  if (index === -1) {
-    res.status(404).send('Ticket not found');
-  } else {
-    tickets[index] = req.body;
+    if (index === -1) {
+      res.status(404).send('Ticket not found');
+    } else {
+      tickets[index] = { ...tickets[index], ...req.body };
 
-    // Write the updated data back to the file
-    fs.writeFileSync(FILE_PATH, JSON.stringify(tickets));
+      await writeTickets(tickets);
 
-    res.send(tickets[index]);
+      res.send(tickets[index]);
+    }
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Something went wrong!');
   }
 });
 
 // Endpoint to delete a ticket by id
-app.delete('/rest/ticket/:id', (req, res) => {
-  const id = parseInt(req.params.id);
-  const index = tickets.findIndex((t) => t.id === id);
+app.delete('/rest/ticket/:id', async (req, res) => {
+  try {
+    const id = parseInt(req.params.id);
+    const tickets = await readTickets();
+    const index = tickets.findIndex((t) => t.id === id);
 
-  if (index === -1) {
-    res.status(404).send('Ticket not found');
-  } else {
-    const deletedTicket = tickets.splice(index, 1)[0];
+    if (index === -1) {
+      res.status(404).send('Ticket not found');
+    } else {
+      const deletedTicket = tickets.splice(index, 1)[0];
 
-    // Write the updated data back to the file
-    fs.writeFileSync(FILE_PATH, JSON.stringify(tickets));
+      await writeTickets(tickets);
 
-    res.send(deletedTicket);
+      res.send(deletedTicket);
+    }
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Something went wrong!');
   }
 });
 
 // Error handling middleware
 app.use(function(err, req, res, next) {
-  console.error(err.stack);
-  res.status(500).send('Something went wrong!');
-});
+  console.error(err.stack)
+
 
 // Start the server
 app.listen(PORT, () => {
