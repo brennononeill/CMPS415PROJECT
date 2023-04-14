@@ -1,89 +1,41 @@
 const express = require('express');
-const fs = require('fs');
+const bodyParser = require('body-parser');
 
+// Create Express app
 const app = express();
-const PORT = process.env.PORT || 3000;
 
-let tickets = [
-  {
-    "id": 35436,
-    "created_at": "2015-07-20T22:55:29Z",
-    "updated_at": "2016-05-05T10:38:52Z",
-    "type": "incident",
-    "subject": "MFP not working right",
-    "description": "PC Load Letter? What does that even mean???",
-    "priority": "med",
-    "status": "open",
-    "recipient": "support_example@selu.edu",
-    "submitter": "Michael_bolton@selu.edu",
-    "assignee_id": 235323,
-    "follower_ids": [
-        235323,
-        234
-    ],
-    "tags": [
-        "enterprise",
-        "printers"
-    ]
-  }
-];
+// Middleware for parsing JSON requests
+app.use(bodyParser.json());
 
-// Endpoint to get all tickets
+// In-memory storage for tickets
+let tickets = [];
+
+// GET endpoint to get all tickets
 app.get('/rest/list', (req, res) => {
-  res.send(tickets);
+  res.json(tickets);
 });
 
-// Endpoint to get a single ticket by id
+// GET endpoint to get a single ticket by ID
 app.get('/rest/ticket/:id', (req, res) => {
-  const id = parseInt(req.params.id);
-  const ticket = tickets.find((t) => t.id === id);
+  const ticketId = req.params.id;
+  const ticket = tickets.find(ticket => ticket.id === ticketId);
 
-  if (!ticket) {
-    res.status(404).send('Ticket not found');
+  if (ticket) {
+    res.json(ticket);
   } else {
-    res.send(ticket);
+    res.status(404).json({ error: 'Ticket not found' });
   }
 });
 
-// Endpoint to create a new ticket
-app.post('/rest/ticket', express.json(), (req, res) => {
-  const ticket = req.body;
-  ticket.id = Date.now(); // Assign a unique id
-  tickets.push(ticket);
-  console.log(`Created ticket with id ${ticket.id}`);
-  res.send(ticket);
-});
-
-// Endpoint to update a ticket by id
-app.put('/rest/ticket/:id', express.json(), (req, res) => {
-  const id = parseInt(req.params.id);
-  const index = tickets.findIndex((t) => t.id === id);
-
-  if (index === -1) {
-    res.status(404).send('Ticket not found');
-  } else {
-    tickets[index] = req.body;
-    tickets[index].id = id;
-    console.log(`Updated ticket with id ${id}`);
-    res.send(tickets[index]);
-  }
-});
-
-// Endpoint to delete a ticket by id
-app.delete('/rest/ticket/:id', (req, res) => {
-  const id = parseInt(req.params.id);
-  const index = tickets.findIndex((t) => t.id === id);
-
-  if (index === -1) {
-    res.status(404).send('Ticket not found');
-  } else {
-    tickets.splice(index, 1);
-    console.log(`Deleted ticket with id ${id}`);
-    res.sendStatus(204);
-  }
+// POST endpoint to create a new ticket
+app.post('/rest/ticket', (req, res) => {
+  const newTicket = req.body;
+  newTicket.id = Date.now().toString(); // Assign a unique ID to the new ticket
+  tickets.push(newTicket);
+  res.json(newTicket);
 });
 
 // Start the server
-app.listen(PORT, () => {
-  console.log(`Server listening on port ${PORT}`);
+app.listen(3000, () => {
+  console.log('Server running on http://localhost:3000');
 });
