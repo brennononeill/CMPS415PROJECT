@@ -36,7 +36,7 @@ app.get('/read/list', async (req, res) => {
   }
 });
 
-app.get('/read/ticket/:id', async (req, res) => {
+app.get('/rest/ticket/:id', async (req, res) => {
   try {
     const id = parseInt(req.params.id);
     const tickets = await readTickets();
@@ -53,7 +53,7 @@ app.get('/read/ticket/:id', async (req, res) => {
   }
 });
 
-app.post('/read/ticket', async (req, res) => {
+app.post('/rest/ticket', async (req, res) => {
   try {
     const tickets = await readTickets();
     const ticket = req.body;
@@ -70,7 +70,7 @@ app.post('/read/ticket', async (req, res) => {
   }
 });
 
-app.put('/read/ticket/id', async (req, res) => {
+app.put('/rest/ticket/:id', async (req, res) => {
   try {
     const id = parseInt(req.params.id);
     const tickets = await readTickets();
@@ -91,7 +91,7 @@ app.put('/read/ticket/id', async (req, res) => {
   }
 });
 
-app.delete('/read/ticket/id', async (req, res) => {
+app.delete('/rest/ticket/:id', async (req, res) => {
   try {
     const id = parseInt(req.params.id);
     const tickets = await readTickets();
