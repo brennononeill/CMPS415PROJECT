@@ -24,11 +24,9 @@ async function writeTickets(tickets) {
   }
 }
 
-// Middleware to parse request bodies
 app.use(express.json());
 
-// Endpoint to get all tickets
-app.get('/rest/list', async (req, res) => {
+app.get('/read/list', async (req, res) => {
   try {
     const tickets = await readTickets();
     res.send(tickets);
@@ -38,8 +36,7 @@ app.get('/rest/list', async (req, res) => {
   }
 });
 
-// Endpoint to get a single ticket by id
-app.get('/rest/ticket/:id', async (req, res) => {
+app.get('/read/ticket/:id', async (req, res) => {
   try {
     const id = parseInt(req.params.id);
     const tickets = await readTickets();
@@ -56,12 +53,11 @@ app.get('/rest/ticket/:id', async (req, res) => {
   }
 });
 
-// Endpoint to create a new ticket
-app.post('/rest/ticket', async (req, res) => {
+app.post('/read/ticket', async (req, res) => {
   try {
     const tickets = await readTickets();
     const ticket = req.body;
-    ticket.id = Date.now(); // Assign a unique id
+    ticket.id = Date.now(); 
     tickets.push(ticket);
     console.log(`Created ticket with id ${ticket.id}`);
 
@@ -74,8 +70,7 @@ app.post('/rest/ticket', async (req, res) => {
   }
 });
 
-// Endpoint to update an existing ticket by id
-app.put('/rest/ticket/:id', async (req, res) => {
+app.put('/read/ticket/id', async (req, res) => {
   try {
     const id = parseInt(req.params.id);
     const tickets = await readTickets();
@@ -96,8 +91,7 @@ app.put('/rest/ticket/:id', async (req, res) => {
   }
 });
 
-// Endpoint to delete a ticket by id
-app.delete('/rest/ticket/:id', async (req, res) => {
+app.delete('/read/ticket/id', async (req, res) => {
   try {
     const id = parseInt(req.params.id);
     const tickets = await readTickets();
@@ -118,12 +112,9 @@ app.delete('/rest/ticket/:id', async (req, res) => {
   }
 });
 
-// Error handling middleware
 app.use(function(err, req, res, next) {
   console.error(err.stack)
 
-
-// Start the server
 app.listen(PORT, () => {
   console.log(`Server listening on port ${PORT}`);
 });
