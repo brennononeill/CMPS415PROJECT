@@ -26,7 +26,7 @@ async function writeTickets(tickets) {
 
 app.use(express.json());
 
-app.get('/read/list', async (req, res) => {
+app.get('/rest/list', async (req, res) => {
   try {
     const tickets = await readTickets();
     res.send(tickets);
