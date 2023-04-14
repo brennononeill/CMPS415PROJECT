@@ -2,7 +2,7 @@
   "name": "CMPS415PROJECT",
   "version": "1.0.0",
   "description": "Phase 1 CRUD",
-  "main": "phase1.js",
+  "main": "415phase1.js",
   "repository": "https://github.com/brennononeill/CMPS415PROJECT",
   "author": "BrennonONeill",
   "license": "MIT",
