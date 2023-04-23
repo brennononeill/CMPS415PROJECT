@@ -5,11 +5,9 @@ const fs = require('fs');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Connection URL and database name
 const uri = "mongodb+srv://brennononeill:CMPS415@bomdb.g5uygmr.mongodb.net/?retryWrites=true&w=majority";
 const client = new MongoClient(uri, { useNewUrlParser: true });
 
-// Connect to MongoDB
 async function connect() {
   try {
     await client.connect();
@@ -20,15 +18,11 @@ async function connect() {
 }
 connect();
 
-// Middleware to parse request body as JSON
 app.use(bodyParser.json());
 
-// Serve static files from the "public" directory
 app.use(express.static('public'));
 
-
-// Route to serve the HTML form for adding a new ticket
-app.get('/form', (req, res) => {
+app.get('/home', (req, res) => {
   fs.readFile('./main.html', 'utf8', (err, data) => {
     if (err) {
       console.error('Failed to read file:', err);
@@ -39,18 +33,16 @@ app.get('/form', (req, res) => {
   });
 });
 
-// Endpoint to get all tickets
 app.get('/rest/list', async (req, res) => {
   const tickets = client.db('CMPS415PROJECT').collection('Phase2');
   const result = await tickets.find().toArray();
   res.send(result);
 });
-// Define a route for retrieving a ticket by id
+
 app.get('/rest/ticket/:id', async (req, res) => {
-  const ticketId = parseFloat(req.params.id); // Parse id as double
+  const ticketId = parseFloat(req.params.id); 
   const tickets = client.db('CMPS415PROJECT').collection('Phase2');
 
-  // Use findOne() method to find a document by id
   const ticket = await tickets.findOne({ id: ticketId });
 
   if (ticket) {
@@ -62,38 +54,31 @@ app.get('/rest/ticket/:id', async (req, res) => {
   }
 });
 
-
-
-// // Define a route for creating a new ticket
 app.post('/rest/ticket', async (req, res) => {
-  // Confirm that req.body.body is an object
   if (typeof req.body.body === 'object' && !Array.isArray(req.body.body)) {
     const { type, subject, description, priority, status, recipient, submitter, assignee_id, followers_ids } = req.body.body;
 
-    // Check if required fields are present and not null
     if (type && subject && description && priority && status && recipient && submitter && assignee_id && followers_ids) {
       const ticket = {
-        id: Date.now(), // Assign a unique id
-        created_at: new Date(), // Set created_at field
-        updated_at: new Date(), // Set updated_at field
-        type, // Set type field
-        subject, // Set subject field
-        description, // Set description field
-        priority, // Set priority field
-        status, // Set status field
-        recipient, // Set recipient field
-        submitter, // Set submitter field
-        assignee_id, // Set assignee_id field
-        followers_ids, // Set followers_ids field
+        id: Date.now(), 
+        created_at: new Date(), 
+        updated_at: new Date(), 
+        type, 
+        subject, 
+        description, 
+        priority, 
+        status, 
+        recipient, 
+        submitter, 
+        assignee_id, 
+        followers_ids, 
       };
 
-      // Confirm that ticket is an object
       if (typeof ticket === 'object' && !Array.isArray(ticket)) {
         const tickets = client.db('CMPS415PROJECT').collection('Phase2');
         await tickets.insertOne(ticket);
         console.log(`Created ticket with id ${ticket.id}`);
 
-        // Create a response object with all the fields from the ticket object
         const response = { ...ticket };
 
         res.send(response);
@@ -111,15 +96,11 @@ app.post('/rest/ticket', async (req, res) => {
   }
 }); 
 
-
-
-
-//Define a route to update a ticket
 app.put('/rest/ticket/:id', async (req, res) => {
   try {
     const ticketId = parseInt(req.params.id);
     const updatedTicket = req.body;
-    delete updatedTicket._id; // Remove _id field from updated ticket data
+    delete updatedTicket._id; 
     const tickets = client.db('CMPS415PROJECT').collection('Phase2');
     const result = await tickets.updateOne({ id: ticketId }, { $set: updatedTicket });
     console.log(`Updated ticket with id ${ticketId}`);
@@ -130,16 +111,10 @@ app.put('/rest/ticket/:id', async (req, res) => {
   }
 });
 
-
-
-
-
-// Define a route for deleting a ticket by id
 app.delete('/rest/ticket/:id', async (req, res) => {
-   const ticketId = parseInt(req.params.id); // Parse id as integer
+   const ticketId = parseInt(req.params.id); 
   const tickets = client.db('CMPS415PROJECT').collection('Phase2');
 
-  // Use deleteOne() method to delete a document by id
   const result = await tickets.deleteOne({ id: ticketId });
 
   if (result.deletedCount === 1) {
@@ -151,8 +126,6 @@ app.delete('/rest/ticket/:id', async (req, res) => {
   }
 });
 
-
-// Start the server
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
