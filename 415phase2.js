@@ -6,7 +6,7 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 // Connection URL and database name
-const uri = 'mongodb+srv://brennononeill:CMPS415@bomdb.g5uygmr.mongodb.net/?retryWrites=true&w=majority';
+const uri = "mongodb+srv://brennononeill:CMPS415@bomdb.g5uygmr.mongodb.net/?retryWrites=true&w=majority";
 const client = new MongoClient(uri, { useNewUrlParser: true });
 
 // Connect to MongoDB
@@ -41,7 +41,8 @@ app.get('/form', (req, res) => {
 
 // Endpoint to get all tickets
 app.get('/rest/list', async (req, res) => {
-  const tickets = client.db('CMPS415PROJECT').collection('CMPS415Phase2
+  const tickets = client.db('CMPS415PROJECT').collection('Phase2');
+  const result = await tickets.find().toArray();
   res.send(result);
 });
 // Define a route for retrieving a ticket by id
