@@ -59,3 +59,9 @@ app.post('/rest/ticket', express.json(), (req, res) => {
 app.listen(PORT, () => {
   console.log(`Server listening on port ${PORT}`);
 });
+
+app.get('/', function(req, res) {
+  const myquery = req.query;
+  var ticket = 'Starting... ';
+  res.send(ticket);
+});
