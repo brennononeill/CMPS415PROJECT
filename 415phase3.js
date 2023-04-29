@@ -99,9 +99,19 @@ app.get('/rest/xml/ticket/:id', async (req, res) => {
   }
 });
 
-router.get("/delete", function (req, res) {
-    res.sendFile(__dirname + `/delete.html`);
-});
+app.get('/deleteform', function(req, res) {
+    res.setHeader('Content-Type', 'text/html');
+    fs.readFile('./delete.html', 'utf8', (err, contents) => {
+      if(err) {
+          console.log('Form file Read Error', err);
+          res.write("<p>Form file Read Error");
+      } else {
+          console.log('Form loaded\n');
+          res.write(contents + "<br>");
+      }
+      res.end();
+    });
+  });
 
 // Define PUT - /rest/xml/ticket/:id endpoint
 app.put('/rest/xml/ticket/:id', async (req, res) => {
