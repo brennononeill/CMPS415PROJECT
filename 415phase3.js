@@ -99,6 +99,10 @@ app.get('/rest/xml/ticket/:id', async (req, res) => {
   }
 });
 
+router.get("/delete", function (req, res) {
+    res.sendFile(__dirname + `/delete.html`);
+});
+
 // Define PUT - /rest/xml/ticket/:id endpoint
 app.put('/rest/xml/ticket/:id', async (req, res) => {
   try {
