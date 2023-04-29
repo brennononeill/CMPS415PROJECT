@@ -48,7 +48,7 @@ app.get('/postform', (req, res) => {
 
 app.get('/', function(req, res) {
     res.setHeader('Content-Type', 'text/html');
-    fs.readFile('./menu.html', 'utf8', (err, contents) => {
+    fs.readFile('./main.html', 'utf8', (err, contents) => {
       if(err) {
           console.log('Form file Read Error', err);
           res.write("<p>Form file Read Error");
