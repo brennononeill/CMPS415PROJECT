@@ -1,55 +1,24 @@
 <html>
    <head>
-      <title>415 Project</title>
+      <title>Form Menu</title>
+      <style>
+         button {
+            background-color: #4CAF50; /* Green */
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+         }
+      </style>
    </head>
 
-   <body style="font-family: arial, sans-serif; background-color: #FFFFFF">
-	   <br>Brennon O'Neill<p>
-	   <br>415 Project<p>
-	   <br><p>
-	   <br><p>
-	   <br>Create Ticket Below:<p>
-      <form id="ticketForm">
-         ID: <input type="text" name="id" id="id"><br>
-         created_at: <input type="text" name="created_at" id="created_at"><br>
-         updated_at: <input type="text" name="updated_at" id="updated_at"><br>
-         type: <input type="text" name="type" id="type"><br>
-         subject: <input type="text" name="subject" id="subject"><br>
-         description: <input type="text" name="description" id="description"><br>
-         priority: <input type="text" name="priority" id="priority"><br>
-         status: <input type="text" name="status" id="status"><br>
-         recipient: <input type="text" name="recipient" id="recipient"><br>
-         submitter: <input type="text" name="submitter" id="submitter"><br>
-         assignee_id: <input type="text" name="assignee_id" id="assignee_id"><br>
-         followers_ids: <input type="text" name="followers_ids" id="followers_ids"><br>
-         <input type="submit" name="submit" value="Send"><p>
-      </form>
-
-      <script>
-         document.getElementById("ticketForm").addEventListener("submit", async function(event) {
-            event.preventDefault();
-
-            const formData = new FormData(event.target);
-            const ticket = {};
-            for (const [key, value] of formData.entries()) {
-               ticket[key] = value;
-            }
-
-            const response = await fetch("/rest/ticket", {
-               method: "POST",
-               body: JSON.stringify({ body: ticket }),
-               headers: {
-                  "Content-Type": "application/json"
-               }
-            });
-
-            if (response.ok) {
-               const data = await response.json();
-               console.log("Ticket created successfully:", data);
-            } else {
-               console.error("Failed to create ticket:", response.statusText);
-            }
-         });
-      </script>
+   <body>
+      <button onclick="window.location.href='./postform'">POST</button>
+      <button onclick="window.location.href='./putform'">PUT</button>
    </body>
 </html>
