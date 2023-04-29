@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+
+<div class="container">
+    <div class="form-container">
+        <h2>Enter Ticket Id:</h2>
+
+        <form id="delete-ticket-form">
+            <div class="form-container">
+                <div>
+                    <h4>Id</h4>
+                    <input id="id" type="number" min="0" name="Id" required>
+                </div>
+                <div>
+                    <button type="submit">Delete</button>
+                </div>
+        </form>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+<script>
+    $(function () {
+        $('#delete-ticket-form').on('submit', function (event) {
+            event.preventDefault();
+
+            var id = $('#id').val();
+            id = parseInt(id);
+            const formData = {
+                Id: id,
+            };
+
+            var requestUrl = '/rest/ticket/' + id;
+
+            $.ajax({
+                url: requestUrl,
+                type: 'DELETE',
+                data: JSON.stringify(formData),
+                contentType: 'application/json',
+                success: function (result) {
+                    console.log(result)
+                }
+            });
+        });
+    });
+</script>
+
+</html>
+
+<style>
+    .container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .form-container {
+        display: flex;
+        flex-direction: column;
+        height: 600px;
+        width: 350px;
+    }
+</style>
