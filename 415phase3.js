@@ -119,14 +119,14 @@ app.put('/rest/xml/ticket/:id', async (req, res) => {
 
 // Endpoint to get all tickets
 app.get('/rest/list', async (req, res) => {
-  const tickets = client.db('Phase-ll').collection('CMPS415');
+  const tickets = client.db('CMPS415PROJECT').collection('Phase2');
   const result = await tickets.find().toArray();
   res.send(result);
 });
 // Define a route for retrieving a ticket by id
 app.get('/rest/ticket/:id', async (req, res) => {
   const ticketId = parseFloat(req.params.id); // Parse id as double
-  const tickets = client.db('Phase-ll').collection('CMPS415');
+  const tickets = client.db('CMPS415PROJECT').collection('Phase2');
 
   // Use findOne() method to find a document by id
   const ticket = await tickets.findOne({ id: ticketId });
@@ -167,7 +167,7 @@ app.post('/rest/ticket', async (req, res) => {
 
       // Confirm that ticket is an object
       if (typeof ticket === 'object' && !Array.isArray(ticket)) {
-        const tickets = client.db('Phase-ll').collection('CMPS415');
+        const tickets = client.db('CMPS415PROJECT').collection('Phase2');
         await tickets.insertOne(ticket);
         console.log(`Created ticket with id ${ticket.id}`);
 
@@ -198,7 +198,7 @@ app.put('/rest/ticket/:id', async (req, res) => {
     const ticketId = parseInt(req.params.id);
     const updatedTicket = req.body;
     delete updatedTicket._id; // Remove _id field from updated ticket data
-    const tickets = client.db('Phase-ll').collection('CMPS415');
+    const tickets = client.db('CMPS415PROJECT').collection('Phase2');
     const result = await tickets.updateOne({ id: ticketId }, { $set: updatedTicket });
     console.log(`Updated ticket with id ${ticketId}`);
     res.send(result);
@@ -211,7 +211,7 @@ app.put('/rest/ticket/:id', async (req, res) => {
 // Define a route for deleting a ticket by id
 app.delete('/rest/ticket/:id', async (req, res) => {
    const ticketId = parseInt(req.params.id); // Parse id as integer
-  const tickets = client.db('Phase-ll').collection('CMPS415');
+  const tickets = client.db('CMPS415PROJECT').collection('Phase2');
 
   // Use deleteOne() method to delete a document by id
   const result = await tickets.deleteOne({ id: ticketId });
