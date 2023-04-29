@@ -35,7 +35,7 @@ app.use(express.static('public'));
 
 
 // Route to serve the HTML form for adding a new ticket
-app.get('/postform', (req, res) => {
+app.get('/create', (req, res) => {
   fs.readFile('./post.html', 'utf8', (err, data) => {
     if (err) {
       console.error('Failed to read file:', err);
@@ -60,7 +60,7 @@ app.get('/', function(req, res) {
     });
 });
 
-app.get('/putform', function(req, res) {
+app.get('/update', function(req, res) {
     res.setHeader('Content-Type', 'text/html');
     fs.readFile('./put.html', 'utf8', (err, contents) => {
       if(err) {
@@ -99,7 +99,7 @@ app.get('/rest/xml/ticket/:id', async (req, res) => {
   }
 });
 
-app.get('/deleteform', function(req, res) {
+app.get('/delete', function(req, res) {
     res.setHeader('Content-Type', 'text/html');
     fs.readFile('./delete.html', 'utf8', (err, contents) => {
       if(err) {
