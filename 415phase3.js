@@ -9,7 +9,7 @@ const axios = require('axios');
 const PORT = process.env.PORT || 3000;
 
 // Connection URL and database name
-const uri = '';
+const uri = 'mongodb+srv://brennononeill:CMPS415@bomdb.g5uygmr.mongodb.net/?retryWrites=true&w=majority';
 const client = new MongoClient(uri, { useNewUrlParser: true });
 
 // Connect to MongoDB
