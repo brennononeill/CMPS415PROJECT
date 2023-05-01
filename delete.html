@@ -1,24 +1,72 @@
-<!DOCTYPE html>
-<html>
+  <html>
+	<body>
+     <body style="font-family: arial, sans-serif; background-color: #E6E6FA">
+	   <br>Update a Ticket Below<p>
+	   <style>
+    body {
+      font-family: arial, sans-serif;
+      background-color: #E6E6FA;
+      padding: 20px;
+    }
 
-<div class="container">
-    <div class="form-container">
-        <h2>Enter Ticket Id:</h2>
+    form {
+      max-width: 400px;
+      margin: 0 auto;
+      background-color: #FFFFFF;
+      padding: 5px;
+      border-radius: 5px;
+    }
 
-        <form id="delete-ticket-form">
-            <div class="form-container">
-                <div>
-                    <h4>Id</h4>
-                    <input id="id" type="number" min="0" name="Id" required>
-                </div>
-                <div>
-                    <button type="submit">Delete</button>
-                </div>
-        </form>
-    </div>
-</div>
+    input[type="text"] {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 10px;
+      border: 1px solid #CCCCCC;
+      border-radius: 3px;
+    }
 
-<script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+    input[type="submit"] {
+      width: 100%;
+      padding: 10px;
+      background-color: #4CAF50;
+      color: #FFFFFF;
+      border: none;
+      border-radius: 3px;
+      cursor: pointer;
+    }
+    button[type="submit"] {
+      width: 100%;
+      padding: 10px;
+      background-color: #FFC629;
+      color: #FFFFFF;
+      border: none;
+      border-radius: 3px;
+      cursor: pointer;
+    }
+
+
+    input[type="submit"]:hover {
+      background-color: #45a049;
+    }
+
+    h1 {
+      text-align: center;
+    }
+
+    p {
+      margin-top: 0;
+    }
+           br {
+      text-align: center;
+    }
+  </style>
+      <form id="delete-ticket-form">
+         ID: <input type="text" name="id" id="id"><br>
+         <input type="submit" name="submit" value="DELETE"><p>
+	      <button type="submit" onclick="window.location.href='./'">RETURN</button>
+      </form>
+	       
+      <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
 <script>
     $(function () {
         $('#delete-ticket-form').on('submit', function (event) {
@@ -45,21 +93,5 @@
     });
 </script>
 
+   </body>
 </html>
-
-<style>
-    .container {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        flex-direction: column;
-        text-align: center;
-    }
-
-    .form-container {
-        display: flex;
-        flex-direction: column;
-        height: 600px;
-        width: 350px;
-    }
-</style>
