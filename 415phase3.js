@@ -163,7 +163,7 @@ app.get('/rest/xml/ticket/:id', async (req, res) => {
 
 function adaptXmlToJson(body) {
     return ticket = {
-        id: parseInt(body.ticket.Id),
+        id: parseInt(body.ticket.id),
         type: body.ticket.type,
         subject: body.ticket.subject,
         description: body.ticket.description,
