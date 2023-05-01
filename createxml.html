@@ -76,15 +76,11 @@
                 Id: id,
             };
 
-            var requestUrl = '/rest/ticket/' + id;
+            var requestUrl = '/rest/xml/ticket/' + id;
 		
 		$.ajax({
-        type: "GET",
-        url: requestUrl,
-        dataType: "json"
-    }).done(function(result){
-       console.log(result)
-    })
+        xhttp.open("GET", requestUrl);
+xhttp.send();
         });
     });
 </script>
