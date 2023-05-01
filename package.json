@@ -1,14 +1,14 @@
 {
   "name": "CMPS415PROJECT",
   "version": "1.0.0",
-  "description": "415 Project Phases 1 and 2",
+  "description": "415 Project Phases 1, 2, and 3",
   "main": "415phase2.js",
   "repository": "https://github.com/brennononeill/CMPS415PROJECT",
   "author": "BrennonONeill",
   "license": "MIT",
   "private": false,
   "scripts": {
-    "start": "node 415phase2.js"
+    "start": "node 415phase3.js"
   },
   "dependencies": {
     "axios": "^1.4.0",
