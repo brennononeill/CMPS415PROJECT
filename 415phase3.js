@@ -25,6 +25,10 @@ connect();
 
 app.use(bodyParser.json());
 
+app.use(bodyParser.urlencoded({ extended: false }));
+
+app.use('/rest', routes);
+
 app.use(express.text({ type: 'application/xml' }));
 
 app.use(express.static('public'));
