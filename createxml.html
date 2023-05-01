@@ -64,7 +64,7 @@
 	      <button type="submit" onclick="window.location.href='./'">RETURN</button>
       </form>
 	       
-      <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+     <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
 <script>
     $(function () {
         $('#create-xml-form').on('submit', function (event) {
@@ -77,10 +77,17 @@
             };
 
             var requestUrl = '/rest/xml/ticket/' + id;
-		
-        xhttp.open("GET", requestUrl);
-xhttp.send();
-  
+
+            $.ajax({
+                url: requestUrl,
+                type: 'GET',
+                data: JSON.stringify(formData),
+                contentType: 'application/json',
+                success: function() {
+              window.location(url);
+                }
+            });
+        });
     });
 </script>
 
