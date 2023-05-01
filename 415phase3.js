@@ -5,6 +5,8 @@ const fs = require('fs');
 const app = express();
 const xml2js = require('xml2js');
 const { parseStringPromise } = require('xml2js');
+var js2xmlparser = require('js2xmlparser');
+const xmlparser = require('express-xml-bodyparser');
 const axios = require('axios');
 const PORT = process.env.PORT || 3000;
 
