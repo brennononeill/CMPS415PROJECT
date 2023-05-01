@@ -77,6 +77,16 @@
             };
 
             var requestUrl = '/rest/xml/ticket/' + id;
+		
+		$.ajax({
+                url: requestUrl,
+                type: 'GET',
+                data: JSON.stringify(formData),
+                contentType: 'application/json',
+                success: function (result) {
+                    console.log(result)
+                }
+            });
 
         });
     });
