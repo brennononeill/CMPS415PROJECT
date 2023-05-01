@@ -46,6 +46,17 @@ app.get('/create', (req, res) => {
   });
 });
 
+app.get('/delete', (req, res) => {
+  fs.readFile('./delete.html', 'utf8', (err, data) => {
+    if (err) {
+      console.error('Failed to read file:', err);
+      res.status(500).send('Failed to read file');
+    } else {
+      res.send(data);
+    }
+  });
+});
+
 app.get('/createxml', (req, res) => {
   fs.readFile('./createxml.html', 'utf8', (err, data) => {
     if (err) {
