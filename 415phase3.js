@@ -68,7 +68,7 @@ app.get('/createxml', (req, res) => {
   });
 });
 
-app.get('/listbyID', (req, res) => {
+app.get('/listbyid', (req, res) => {
   fs.readFile('./createxml.html', 'utf8', (err, data) => {
     if (err) {
       console.error('Failed to read file:', err);
