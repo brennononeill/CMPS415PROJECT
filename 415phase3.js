@@ -142,8 +142,8 @@ app.get('/rest/xml/ticket/:id', async (req, res) => {
 
     async function run() {
         try {
-            const database = client.db('CMPS415-TicketingSystem');
-            const tickets = database.collection('HelpDeskTickets');
+            const database = client.db('CMPS415PROJECT');
+            const tickets = database.collection('Phase2');
 
             const updateTicket = await tickets.findOneAndUpdate({ TicketId: updatedTicket.TicketId }, { $set: updatedTicket });
 
