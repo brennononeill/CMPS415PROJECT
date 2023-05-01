@@ -129,18 +129,34 @@ app.get('/rest/xml/ticket/:id', async (req, res) => {
   }
 });
 
-app.put('/rest/xml/ticket/:id', async (req, res) => {
-  try {
-    const xml = req.body;
-    const json = await parseStringPromise(xml, { explicitArray: false });
-    const ticketId = req.params.id;
-    const response = await axios.put(`http://localhost:3000/rest/ticket/${ticketId}`, json);
+app.put("/xml/ticket/:TicketId", xmlparser({ trim: false, explicitArray: false, normalizeTags: false, explicitRoot: true }), function (req, res) {
+    const client = new MongoClient(uri);
 
-    res.send(response.data);
-  } catch (error) {
-    console.error(error);
-    res.status(500).send(error.message);
-  }
+    let xmlData = req.body;
+    console.log(xmlData);
+
+    var updatedTicket = adaptXmlToJson(xmlData);
+    console.log(updatedTicket);
+
+    async function run() {
+        try {
+            const database = client.db('CMPS415-TicketingSystem');
+            const tickets = database.collection('HelpDeskTickets');
+
+            const updateTicket = await tickets.findOneAndUpdate({ TicketId: updatedTicket.TicketId }, { $set: updatedTicket });
+
+            if (!updateTicket) {
+                res.status(404).send("Ticket not found.");
+            } else {
+                res.send(updateTicket).status(200);
+            }
+        } finally {
+            await client.close();
+        }
+    }
+
+    run().catch(console.dir);
+
 });
 
 app.get('/rest/list', async (req, res) => {
