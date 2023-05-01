@@ -131,7 +131,7 @@ app.get('/rest/xml/ticket/:id', async (req, res) => {
   }
 });
 
- app.put("/xml/ticket/:id", xmlparser({ trim: false, explicitArray: false, normalizeTags: false, explicitRoot: true }), function (req, res) {
+ app.put("/rest/xml/ticket/:id", xmlparser({ trim: false, explicitArray: false, normalizeTags: false, explicitRoot: true }), function (req, res) {
     const client = new MongoClient(uri);
 
     let xmlData = req.body;
