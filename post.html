@@ -79,14 +79,12 @@
          document.getElementById("ticketForm").addEventListener("submit", async function(event) {
             event.preventDefault();
 
-            // Convert form data to JSON object
             const formData = new FormData(event.target);
             const ticket = {};
             for (const [key, value] of formData.entries()) {
                ticket[key] = value;
             }
 
-            // Send POST request to server with JSON body
             const response = await fetch("/rest/ticket", {
                method: "POST",
                body: JSON.stringify({ body: ticket }),
