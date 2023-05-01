@@ -60,7 +60,7 @@
   </style>
       <form id="create-xml-form">
          ID: <input type="text" name="id" id="id"><br>
-         <input type="submit" onclick="window.location.href='./rest/xml/ticket/' + id" name="submit" value="CREATE"><p>
+         <input type="submit" name="submit" value="CREATE"><p>
 	      <button type="submit" onclick="window.location.href='./'">RETURN</button>
       </form>
 	       
@@ -76,18 +76,8 @@
                 Id: id,
             };
 
-            var requestUrl = '/rest/xml/ticket/' + id;
+            var requestUrl = "window.location.href='./'";
 		
-		$.ajax({
-                url: requestUrl,
-                type: 'GET',
-                data: JSON.stringify(formData),
-                contentType: 'application/json',
-                success: function (result) {
-                    console.log(result)
-                }
-            });
-
         });
     });
 </script>
