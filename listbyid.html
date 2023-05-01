@@ -1,7 +1,7 @@
 <html>
 	<body>
      <body style="font-family: arial, sans-serif; background-color: #FFFFFF">
-	   <h1>Delete a Ticket Below</h1>
+	   <h1>List a Ticket by ID Below</h1>
 	   <style>
     body {
       font-family: arial, sans-serif;
@@ -58,11 +58,35 @@
     }
      
   </style>
-      <form id="list-ticket-form">
+      <form id="create-xml-form">
          ID: <input type="text" name="id" id="id"><br>
-         <input type="submit" name="submit" value="LIST TICKET"><p>
+         <input type="submit" name="submit" value="CREATE"><p>
 	      <button type="submit" onclick="window.location.href='./'">RETURN</button>
       </form>
+	         
+ <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+<script>
+    $(function () {
+        $('#create-xml-form').on('submit', function (event) {
+            event.preventDefault();
+
+            var id = $('#id').val();
+            id = parseInt(id);
+            const formData = {
+                Id: id,
+            };
+
+            var url = '/rest/ticket/' + id;
+
+            $.ajax({
+                url: url,
+                success: function (result) {
+                    window.location = url;
+                }
+            });
+        });
+    });
+</script>
 
    </body>
 </html>
