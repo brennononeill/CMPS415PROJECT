@@ -79,7 +79,7 @@
 
     const response = await fetch(`/rest/ticket/${ticket.id}`, {
       method: "PUT",
-      body: JSON.stringify(ticket), // send the JSON object directly
+      body: JSON.stringify(ticket), 
       headers: {
         "Content-Type": "application/json"
       }
