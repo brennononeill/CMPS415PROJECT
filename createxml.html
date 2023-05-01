@@ -76,12 +76,12 @@
                 Id: id,
             };
 
-            var requestUrl = '/rest/ticket/' + id;
+            var url = '/rest/ticket/' + id;
 
             $.ajax({
-                url: requestUrl,
+                url: url,
                 success: function (result) {
-                    window.location(result)
+                    window.location = url;
                 }
             });
         });
