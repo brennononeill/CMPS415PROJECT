@@ -161,6 +161,20 @@ app.get('/rest/xml/ticket/:id', async (req, res) => {
 
 });
 
+function adaptXmlToJson(body) {
+    return ticket = {
+        TicketId: parseInt(body.Ticket.TicketId),
+        Type: body.Ticket.Type,
+        Subject: body.Ticket.Subject,
+        Description: body.Ticket.Description,
+        Priority: body.Ticket.Priority,
+        Status: body.Ticket.Status,
+        Recipient: body.Ticket.Recipient,
+        Submitter: body.Ticket.Submitter,
+        AssigneeId: parseInt(body.Ticket.AssigneeId),
+    }
+};
+
 app.get('/rest/list', async (req, res) => {
   const tickets = client.db('CMPS415PROJECT').collection('Phase2');
   const result = await tickets.find().toArray();
