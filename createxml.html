@@ -90,6 +90,27 @@
         });
     });
 </script>
+	     
+ <script>
+	      document.getElementById("create-xml-form").addEventListener("submit", async function(event) {
+		      event.preventDefault();
+
+   var id = $('#id').val();
+            id = parseInt(id);
+            const formData = {
+                Id: id,
+            };
+
+            var url = '/rest/xml/ticket/' + id;
+
+    // Send PUT request to server with JSON body
+    const response = await fetch(url, {
+      success: function() {
+        window.location = url; 
+    }
+      }
+    });
+</script>
 
    </body>
 </html>
