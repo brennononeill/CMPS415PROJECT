@@ -25,10 +25,6 @@ connect();
 
 app.use(bodyParser.json());
 
-app.use(bodyParser.urlencoded({ extended: false }));
-
-app.use('/rest', routes);
-
 app.use(express.text({ type: 'application/xml' }));
 
 app.use(express.static('public'));
@@ -135,49 +131,20 @@ app.get('/rest/xml/ticket/:id', async (req, res) => {
   }
 });
 
- app.put("/rest/xml/ticket/:id", xmlparser({ trim: false, explicitArray: false, normalizeTags: false, explicitRoot: true }), function (req, res) {
-    const client = new MongoClient(uri);
+app.put('/rest/xml/ticket/:id', async (req, res) => {
+  try {
+    const xml = req.body;
+    const json = await parseStringPromise(xml, { explicitArray: false });
+    const ticketId = req.params.id;
 
-    let xmlData = req.body;
-    console.log(xmlData);
+    const response = await axios.put(`http://localhost:3000/rest/ticket/${ticketId}`, json);
 
-    var updatedTicket = adaptXmlToJson(xmlData);
-    console.log(updatedTicket);
-
-    async function run() {
-        try {
-            const database = client.db('CMPS415PROJECT');
-            const tickets = database.collection('Phase2');
-
-            const updateTicket = await tickets.findOneAndUpdate({ id: updatedTicket.id }, { $set: updatedTicket });
-
-            if (!updatedTicket) {
-                res.status(404).send("Ticket not found.");
-            } else {
-                res.send(updatedTicket).status(200);
-            }
-        } finally {
-            await client.close();
-        }
-    }
-
-    run().catch(console.dir);
-
+    res.send(response.data);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send(error.message);
+  }
 });
-
-function adaptXmlToJson(body) {
-    return ticket = {
-        id: parseInt(body.ticket.id),
-        type: body.ticket.type,
-        subject: body.ticket.subject,
-        description: body.ticket.description,
-        priority: body.ticket.priority,
-        status: body.ticket.status,
-        recipient: body.ticket.recipient,
-        submitter: body.ticket.submitter,
-        assignee_id: parseInt(body.ticket.assignee_id),
-    }
-};
 
 app.get('/rest/list', async (req, res) => {
   const tickets = client.db('CMPS415PROJECT').collection('Phase2');
