@@ -64,24 +64,27 @@
 	      <button type="submit" onclick="window.location.href='./'">RETURN</button>
       </form>
 	         
- <script>
-	      document.getElementById("create-xml-form").addEventListener("submit", async function(event) {
-		      event.preventDefault();
+ <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+<script>
+    $(function () {
+        $('#create-xml-form').on('submit', function (event) {
+            event.preventDefault();
 
-   var id = $('#id').val();
+            var id = $('#id').val();
             id = parseInt(id);
             const formData = {
                 Id: id,
             };
 
-            var url = '/rest/xml/ticket/' + id;
+            var requestUrl = '/rest/ticket/' + id;
 
-    // Send PUT request to server with JSON body
-    const response = await fetch(url, {
-      success: function() {
-        window.location = url; 
-    }
-      }
+            $.ajax({
+                url: requestUrl,
+                success: function (result) {
+                    window.location(result)
+                }
+            });
+        });
     });
 </script>
 
