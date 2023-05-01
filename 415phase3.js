@@ -145,12 +145,12 @@ app.get('/rest/xml/ticket/:id', async (req, res) => {
             const database = client.db('CMPS415PROJECT');
             const tickets = database.collection('Phase2');
 
-            const updateTicket = await tickets.findOneAndUpdate({ TicketId: updatedTicket.TicketId }, { $set: updatedTicket });
+            const updateTicket = await tickets.findOneAndUpdate({ id: updatedTicket.id }, { $set: updatedTicket });
 
-            if (!updateTicket) {
+            if (!updatedTicket) {
                 res.status(404).send("Ticket not found.");
             } else {
-                res.send(updateTicket).status(200);
+                res.send(updatedTicket).status(200);
             }
         } finally {
             await client.close();
@@ -163,15 +163,15 @@ app.get('/rest/xml/ticket/:id', async (req, res) => {
 
 function adaptXmlToJson(body) {
     return ticket = {
-        TicketId: parseInt(body.Ticket.TicketId),
-        Type: body.Ticket.Type,
-        Subject: body.Ticket.Subject,
-        Description: body.Ticket.Description,
-        Priority: body.Ticket.Priority,
-        Status: body.Ticket.Status,
-        Recipient: body.Ticket.Recipient,
-        Submitter: body.Ticket.Submitter,
-        AssigneeId: parseInt(body.Ticket.AssigneeId),
+        id: parseInt(body.ticket.Id),
+        type: body.ticket.type,
+        subject: body.ticket.subject,
+        description: body.ticket.description,
+        priority: body.ticket.priority,
+        status: body.ticket.status,
+        recipient: body.ticket.recipient,
+        submitter: body.ticket.submitter,
+        assignee_id: parseInt(body.ticket.assignee_id),
     }
 };
 
