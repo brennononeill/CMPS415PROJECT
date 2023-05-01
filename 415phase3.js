@@ -153,7 +153,7 @@ app.get('/rest/list', async (req, res) => {
 });
 
 app.get('/rest/ticket/:id', async (req, res) => {
-  const ticketId = parseFloat(req.params.id); // Parse id as double
+  const ticketId = parseFloat(req.params.id); 
   const tickets = client.db('CMPS415PROJECT').collection('Phase2');
   const ticket = await tickets.findOne({ id: ticketId });
 
