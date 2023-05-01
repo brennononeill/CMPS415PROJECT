@@ -79,12 +79,11 @@
             var requestUrl = '/rest/xml/ticket/' + id;
 
             $.ajax({
-                url: requestUrl,
-                type: 'GET',
-                data: JSON.stringify(formData),
-                contentType: 'application/json',
-                success: function() {
-              window.location(url);
+                url : requestUrl,
+            type: "POST",
+            data : value,
+            success: function() {
+              window.location(url); 
                 }
             });
         });
